@@ -1,0 +1,1 @@
+class CookpadResponse : ArrayList<CookpadResponseItem>()
