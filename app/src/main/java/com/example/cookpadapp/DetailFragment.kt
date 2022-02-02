@@ -8,6 +8,7 @@ import com.example.cookpadapp.databinding.FragmentDetailBinding
 import com.example.cookpadapp.model.RecipeDetailsResponse
 import com.example.cookpadapp.ui.BaseFragment
 import com.example.cookpadapp.viewmodel.DetailCookpadViewModel
+import com.squareup.picasso.Picasso
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -32,7 +33,8 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
                 binding.publishedAt.text = it.userFormat()
             }
            binding.title.text = recipeDetail.title
-
+          Picasso.get().load(recipeDetail.imageUrl).into(binding.imageUrl)
+          Picasso.get().load(recipeDetail.user.imageUrl).into(binding.userImage)
         }
     }
 }
