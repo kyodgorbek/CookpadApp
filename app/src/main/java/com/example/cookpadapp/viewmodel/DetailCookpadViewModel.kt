@@ -4,14 +4,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cookpadapp.domain.use_case.GetRecipeDetailsUseCase
-import com.example.cookpadapp.domain.use_case.GetRecipeUseCase
 import com.example.cookpadapp.domain.utils.fold
 import com.example.cookpadapp.model.RecipeDetailsResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DetailCookpadViewModel(
-    private  val getRecipeDetailsUseCase: GetRecipeDetailsUseCase
+    private val getRecipeDetailsUseCase: GetRecipeDetailsUseCase
 ) : ViewModel() {
 
     var recipeDetails = MutableLiveData<RecipeDetailsResponse>()

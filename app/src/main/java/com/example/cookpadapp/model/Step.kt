@@ -1,4 +1,5 @@
 package com.example.cookpadapp.model
+
 import com.google.gson.annotations.SerializedName
 
 data class Step(

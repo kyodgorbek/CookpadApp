@@ -17,5 +17,4 @@ interface CookpadInterface {
     suspend fun getRecipeDetails(@Path("id") recipeId: Int): RecipeDetailsResponse
 
 
-
 }

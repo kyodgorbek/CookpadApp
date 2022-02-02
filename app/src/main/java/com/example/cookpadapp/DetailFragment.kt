@@ -5,7 +5,7 @@ import android.view.View
 import com.example.cookpadapp.com.example.cookpadapp.utils.parseDate
 import com.example.cookpadapp.com.example.cookpadapp.utils.userFormat
 import com.example.cookpadapp.databinding.FragmentDetailBinding
-import com.example.cookpadapp.model.RecipeDetailsResponse
+
 import com.example.cookpadapp.ui.BaseFragment
 import com.example.cookpadapp.viewmodel.DetailCookpadViewModel
 import com.squareup.picasso.Picasso
@@ -24,17 +24,18 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         initObservers()
     }
 
-    private fun initObservers(){
-        viewModel.recipeDetails.observe(viewLifecycleOwner){ recipeDetail ->
+    private fun initObservers() {
+        viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetail ->
             binding.username.text = recipeDetail.user.name
             binding.ingredients.text = recipeDetail.ingredients.toString()
-            binding.steps.text = recipeDetail.steps.toString()
             recipeDetail.publishedAt.parseDate()?.let {
                 binding.publishedAt.text = it.userFormat()
             }
-           binding.title.text = recipeDetail.title
-          Picasso.get().load(recipeDetail.imageUrl).into(binding.imageUrl)
-          Picasso.get().load(recipeDetail.user.imageUrl).into(binding.userImage)
+            binding.title.text = recipeDetail.title
+            Picasso.get().load(recipeDetail.imageUrl).into(binding.imageUrl)
+            Picasso.get().load(recipeDetail.user.imageUrl).into(binding.userImage)
+            binding.stepsDescription.text = recipeDetail.steps[0].description
+
         }
     }
 }

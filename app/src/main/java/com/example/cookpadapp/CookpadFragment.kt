@@ -10,7 +10,7 @@ import com.example.cookpadapp.ui.adapter.RecipeAdapter
 import com.example.cookpadapp.viewmodel.CookpadViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-// TODO: item_recipe, RecipeAdapter, fragment_cookpad
+
 class CookpadFragment : BaseFragment<FragmentCookpadBinding>() {
 
     override val layoutId: Int = R.layout.fragment_cookpad

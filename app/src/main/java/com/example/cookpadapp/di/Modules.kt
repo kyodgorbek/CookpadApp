@@ -22,7 +22,7 @@ object Modules {
 
     val viewModels = module {
         viewModel { CookpadViewModel(get()) }
-        viewModel{DetailCookpadViewModel(get())}
+        viewModel { DetailCookpadViewModel(get()) }
     }
 
     val apiModule = module {

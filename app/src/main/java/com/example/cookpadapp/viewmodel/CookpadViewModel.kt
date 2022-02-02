@@ -1,14 +1,11 @@
 package com.example.cookpadapp.viewmodel
 
 
-import androidx.annotation.UiThread
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cookpadapp.domain.use_case.GetRecipeUseCase
 import com.example.cookpadapp.domain.utils.fold
-import com.example.cookpadapp.model.Recipe
 import com.example.cookpadapp.model.RecipeResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,10 +27,10 @@ class CookpadViewModel(private val recipeUseCase: GetRecipeUseCase) : ViewModel(
         progress.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
             recipeUseCase.invoke()
-                .fold({  recipeResponse->
+                .fold({ recipeResponse ->
                     cookpad.postValue(recipeResponse)
                 }, {
-                   error.postValue(it.message)
+                    error.postValue(it.message)
                 })
             progress.postValue(false)
         }
