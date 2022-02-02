@@ -1,3 +1,5 @@
+
+package com.example.cookpadapp
 import android.app.Application
 import com.example.cookpadapp.di.Modules.apiModule
 import com.example.cookpadapp.di.Modules.viewModels

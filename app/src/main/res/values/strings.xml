@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CookpadApp</string>
+    <string name="ingredients">1 cup oil\n1 cup orange juice\nflour, as much as it takes (about 1/2 kg)\n1/2 kg pitted olives\n2-3 small spring onions finely chopped\nfinely chopped spearmint (preferably fresh)</string>
+    <string name="steps">1.Blend the olives in a food processor. Mix them with the onion and the spearmint.\n\n2.Prepare the dough by placing the liquids in a bowl and adding flour until you have a soft dough that doesn`t stick. Set it aside to rest for 15 mninutes.\n\n3.Roll out the dough in filo sheets that are almost square, then divide the filo sheet into 4 quarters and each quarter into 2 triangles. Starting from the base of the triangly, place a spoonful of filling, then fold the ends inwards and roll towards the top point, like a small croissant.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

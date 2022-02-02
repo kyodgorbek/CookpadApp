@@ -1,38 +1,41 @@
 package com.example.cookpadapp.viewmodel
 
-import CookpadResponse
+
 import androidx.annotation.UiThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cookpadapp.CookpadRepository
+import com.example.cookpadapp.domain.use_case.GetRecipeUseCase
+import com.example.cookpadapp.domain.utils.fold
+import com.example.cookpadapp.model.Recipe
+import com.example.cookpadapp.model.RecipeResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class CookpadViewModel(private val cookpadRepository: CookpadRepository) : ViewModel() {
+class CookpadViewModel(private val recipeUseCase: GetRecipeUseCase) : ViewModel() {
 
-    private var _cookpadResponse = MutableLiveData<CookpadResponse>()
+    var cookpad = MutableLiveData<RecipeResponse>()
 
     // Expose to the outside world
-    val cookpad: LiveData<CookpadResponse> = _cookpadResponse
-    var progress: MutableLiveData<Boolean> = MutableLiveData(false)
+    val error = MutableLiveData<String>()
+    var progress = MutableLiveData(false)
 
 
     init {
-        getCookpad()
+        getRecipes()
     }
 
-    @UiThread
-    fun getCookpad() {
+    fun getRecipes() {
+        progress.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
-            progress.postValue(true)
-            try {
-                val response = cookpadRepository.getCookpad().body()!!
-                _cookpadResponse.postValue(response)
-            } finally {
-                progress.postValue(false)
-            }
+            recipeUseCase.invoke()
+                .fold({  recipeResponse->
+                    cookpad.postValue(recipeResponse)
+                }, {
+                   error.postValue(it.message)
+                })
+            progress.postValue(false)
         }
     }
 }

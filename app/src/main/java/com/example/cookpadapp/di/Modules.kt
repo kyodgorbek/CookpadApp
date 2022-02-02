@@ -1,10 +1,14 @@
 package com.example.cookpadapp.di
 
 import android.content.Context
-import com.example.cookpadapp.CookpadRepository
+import com.example.cookpadapp.domain.repository.CookpadRepository
+import com.example.cookpadapp.domain.use_case.GetRecipeDetailsUseCase
+import com.example.cookpadapp.domain.use_case.GetRecipeUseCase
 import com.example.cookpadapp.internet.CookpadInterface
 import com.example.cookpadapp.utils.Constants
 import com.example.cookpadapp.viewmodel.CookpadViewModel
+import com.example.cookpadapp.viewmodel.DetailCookpadViewModel
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -18,11 +22,15 @@ object Modules {
 
     val viewModels = module {
         viewModel { CookpadViewModel(get()) }
+        viewModel{DetailCookpadViewModel(get())}
     }
 
     val apiModule = module {
 
         factory { CookpadRepository(get()) }
+        factory { GetRecipeUseCase(get()) }
+        factory { GetRecipeDetailsUseCase(get()) }
+
 
         single<CookpadInterface> {
             provideRetrofit(get<OkHttpClient>())
@@ -54,11 +62,6 @@ fun provideOkHttpClient(cache: Cache): OkHttpClient {
         .writeTimeout(60, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
         .cache(cache)
-        .addInterceptor { chain ->
-            val newRequest = chain.request().newBuilder()
-                .header("Cookpad-Url", Constants.COOKPAD_URL)
-            chain.proceed(newRequest.build())
-        }
         .addInterceptor(logger)
         .build()
 }
@@ -68,7 +71,7 @@ fun provideRetrofit(okHttpClient: OkHttpClient): CookpadInterface {
         .baseUrl(Constants.BASE_URL)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
-        //.addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
         .build()
         .create(CookpadInterface::class.java)
 }
